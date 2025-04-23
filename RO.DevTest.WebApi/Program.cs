@@ -18,8 +18,25 @@ public class Program {
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        builder.Services.InjectPersistenceDependencies()
+        builder.Services.InjectPersistenceDependencies(builder.Configuration)
             .InjectInfrastructureDependencies();
+
+        
+        // register customer use case handler
+        // create
+        builder.Services.AddScoped<
+            RO.DevTest.Application.Interfaces.UseCases.Customer.ICreateCustomerHandler,
+            RO.DevTest.Application.UseCases.Customer.Create.CreateCustomerHandler>();
+        
+        // update
+        builder.Services.AddScoped<
+            RO.DevTest.Application.Interfaces.UseCases.Customer.IUpdateCustomerHandler,
+            RO.DevTest.Application.UseCases.Customer.Update.UpdateCustomerHandler>();
+
+        // delete
+        builder.Services.AddScoped<
+            RO.DevTest.Application.Interfaces.UseCases.Customer.IDeleteCustomerHandler,
+            RO.DevTest.Application.UseCases.Customer.Delete.DeleteCustomerHandler>();
 
         // Add Mediatr to program
         builder.Services.AddMediatR(cfg =>

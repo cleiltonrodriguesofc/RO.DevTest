@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using RO.DevTest.Application.Contracts.Infrastructure;
 using RO.DevTest.Domain.Entities;

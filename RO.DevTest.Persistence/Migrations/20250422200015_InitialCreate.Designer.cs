@@ -12,8 +12,8 @@ using RO.DevTest.Persistence;
 namespace RO.DevTest.Persistence.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    [Migration("20250404205649_Initial")]
-    partial class Initial
+    [Migration("20250422200015_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -105,10 +105,12 @@ namespace RO.DevTest.Persistence.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("text");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("text");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("text");
@@ -145,10 +147,12 @@ namespace RO.DevTest.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("text");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("text");
