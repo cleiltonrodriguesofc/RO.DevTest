@@ -22,7 +22,7 @@ public interface IProductRepository
     // update an existing product
     Task UpdateAsync(Product product);
 
-    // // delete a product
-    // Task DeleteAsync(Product product);
+    // delete a product
+    Task<bool> DeleteAsync(int id);
 }
 

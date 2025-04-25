@@ -48,10 +48,10 @@ public class Program {
             RO.DevTest.Application.Interfaces.UseCases.Product.IUpdateProductHandler,
             RO.DevTest.Application.UseCases.Product.Update.UpdateProductHandler>();
 
-        // // delete by code
-        // builder.Services.AddScoped<
-        //     RO.DevTest.Application.Interfaces.UseCases.Product.IDeleteProductByCodeHandler,
-        //     RO.DevTest.Application.UseCases.Product.Delete.DeleteProductByCodeHandler>();
+        // delete by id
+        builder.Services.AddScoped<
+            RO.DevTest.Application.Interfaces.UseCases.Product.IDeleteProductHandler,
+            RO.DevTest.Application.UseCases.Product.Delete.DeleteProductHandler>();
 
         // // get by id
         // builder.Services.AddScoped<

@@ -45,10 +45,20 @@ public class ProductRepository : IProductRepository
         await _context.SaveChangesAsync();
     }
 
-    // delete a product
-    public async Task DeleteAsync(Product product)
+    // delete a product by id
+    public async Task<bool> DeleteAsync(int id)
     {
+        var product = await _context.Products.FindAsync(id);
+
+        // return false if product does not exist
+        if (product == null)
+            return false;
+
+        // remove the product and save changes
         _context.Products.Remove(product);
         await _context.SaveChangesAsync();
+
+        return true;
     }
+
 }

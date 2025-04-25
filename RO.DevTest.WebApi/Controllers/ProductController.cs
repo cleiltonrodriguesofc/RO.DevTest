@@ -11,18 +11,18 @@ namespace RO.DevTest.WebApi.Controllers
     {
         private readonly ICreateProductHandler _createHandler;
         private readonly IUpdateProductHandler _updateHandler;
-        // private readonly IDeleteProductHandler _deleteHandler;
+        private readonly IDeleteProductHandler _deleteHandler;
         private readonly IProductRepository _repository;
 
         public ProductController(
             ICreateProductHandler createHandler,
             IUpdateProductHandler updateHandler,
-            // IDeleteProductHandler deleteHandler,
+            IDeleteProductHandler deleteHandler,
             IProductRepository repository)
         {
             _createHandler = createHandler;
             _updateHandler = updateHandler;
-            // _deleteHandler = deleteHandler;
+            _deleteHandler = deleteHandler;
             _repository = repository;
         }
 
@@ -42,16 +42,16 @@ namespace RO.DevTest.WebApi.Controllers
             return Ok(list);
         }
 
-        // // GET api/product/{id}
-        // [HttpGet("{id}")]
-        // public async Task<IActionResult> GetById(int id)
-        // {
-        //     var product = await _repository.GetByIdAsync(id);
-        //     if (product == null)
-        //         return NotFound();
+        // GET api/product/{id}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var product = await _repository.GetByIdAsync(id);
+            if (product == null)
+                return NotFound();
 
-        //     return Ok(product);
-        // }
+            return Ok(product);
+        }
 
         // PUT api/product/{id}
         [HttpPut("{id}")]
@@ -67,15 +67,15 @@ namespace RO.DevTest.WebApi.Controllers
             return NoContent();
         }
 
-        // // DELETE api/product/{id}
-        // [HttpDelete("{id}")]
-        // public async Task<IActionResult> Delete(int id)
-        // {
-        //     var deleted = await _deleteHandler.HandleAsync(id);
-        //     if (!deleted)
-        //         return NotFound();
+        // DELETE api/product/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var deleted = await _deleteHandler.HandleAsync(id);
+            if (!deleted)
+                return NotFound();
 
-        //     return NoContent();
-        // }
+            return NoContent();
+        }
     }
 }

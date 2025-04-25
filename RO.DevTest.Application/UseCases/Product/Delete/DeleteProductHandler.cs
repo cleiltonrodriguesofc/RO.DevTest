@@ -1,47 +1,24 @@
-// using RO.DevTest.Application.DTOs.Product.DeleteOrSearch;
-// using RO.DevTest.Application.Interfaces.Repositories;
-// using RO.DevTest.Application.Interfaces.UseCases.Product;
-// using System.Threading;
-// using System.Threading.Tasks;
+using RO.DevTest.Application.Interfaces.Repositories;
+using RO.DevTest.Application.Interfaces.UseCases.Product;
 
-// namespace RO.DevTest.Application.UseCases.Product.Delete
-// {
-//     public class DeleteProductHandler : IDeleteProductHandler
-//     {
-//         private readonly IProductRepository _productRepository;
+namespace RO.DevTest.Application.UseCases.Product.Delete
+{
+    // handles the deletion of a product
+    public class DeleteProductHandler : IDeleteProductHandler
+    {
+        private readonly IProductRepository _repository;
 
-//         public DeleteProductHandler(IProductRepository productRepository)
-//         {
-//             _productRepository = productRepository;
-//         }
+        // inject repository to access data
+        public DeleteProductHandler(IProductRepository repository)
+        {
+            _repository = repository;
+        }
 
-//         public async Task<bool> Handle(ProductDeleteOrSearchRequest request, CancellationToken cancellationToken)
-//         {
-//             if (request.Id != null)
-//             {
-//                 var product = await _productRepository.GetByIdAsync(request.Id.Value);
-//                 if (product == null)
-//                 {
-//                     throw new Exception("Product not found");
-//                 }
+        public async Task<bool> HandleAsync(int id)
+        {
+            // try to delete product; repository returns if existed
+            return await _repository.DeleteAsync(id);
+        }
+    }
 
-//                 await _productRepository.DeleteAsync(product);
-//                 return true; // return success
-//             }
-
-//             if (!string.IsNullOrEmpty(request.Code))
-//             {
-//                 var product = await _productRepository.GetByCodeAsync(request.Code);
-//                 if (product == null)
-//                 {
-//                     throw new Exception("Product not found");
-//                 }
-
-//                 await _productRepository.DeleteAsync(product);
-//                 return true; // return success
-//             }
-
-//             throw new Exception("Product not specified for deletion");
-//         }
-//     }
-// }
+}
