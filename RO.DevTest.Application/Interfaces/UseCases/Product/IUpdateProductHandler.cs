@@ -1,11 +1,9 @@
-// using System.Threading;
-// using System.Threading.Tasks;
-// using RO.DevTest.Application.DTOs.Product.Update;
+using RO.DevTest.Application.DTOs.Product;
 
-// namespace RO.DevTest.Application.Interfaces.UseCases.Product
-// {
-//     public interface IUpdateProductHandler
-//     {
-//         Task ExecuteAsync(UpdateProductRequest request, CancellationToken cancellationToken);
-//     }
-// }
+namespace RO.DevTest.Application.Interfaces.UseCases.Product;
+
+// defines the contract for product update handler
+public interface IUpdateProductHandler
+{
+    Task<bool> HandleAsync(ProductUpdateRequest request);
+}

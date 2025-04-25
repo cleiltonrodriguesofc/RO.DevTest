@@ -43,10 +43,10 @@ public class Program {
             RO.DevTest.Application.Interfaces.UseCases.Product.ICreateProductHandler,
             RO.DevTest.Application.UseCases.Product.Create.CreateProductHandler>();
 
-        // // update by code
-        // builder.Services.AddScoped<
-        //     RO.DevTest.Application.Interfaces.UseCases.Product.IUpdateProductByCodeHandler,
-        //     RO.DevTest.Application.UseCases.Product.Update.UpdateProductByCodeHandler>();
+        // update 
+        builder.Services.AddScoped<
+            RO.DevTest.Application.Interfaces.UseCases.Product.IUpdateProductHandler,
+            RO.DevTest.Application.UseCases.Product.Update.UpdateProductHandler>();
 
         // // delete by code
         // builder.Services.AddScoped<

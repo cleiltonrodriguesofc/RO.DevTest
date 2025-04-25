@@ -10,18 +10,18 @@ namespace RO.DevTest.WebApi.Controllers
     public class ProductController : ControllerBase
     {
         private readonly ICreateProductHandler _createHandler;
-        // private readonly IUpdateProductHandler _updateHandler;
+        private readonly IUpdateProductHandler _updateHandler;
         // private readonly IDeleteProductHandler _deleteHandler;
         private readonly IProductRepository _repository;
 
         public ProductController(
             ICreateProductHandler createHandler,
-            // IUpdateProductHandler updateHandler,
+            IUpdateProductHandler updateHandler,
             // IDeleteProductHandler deleteHandler,
             IProductRepository repository)
         {
             _createHandler = createHandler;
-            // _updateHandler = updateHandler;
+            _updateHandler = updateHandler;
             // _deleteHandler = deleteHandler;
             _repository = repository;
         }
@@ -53,19 +53,19 @@ namespace RO.DevTest.WebApi.Controllers
         //     return Ok(product);
         // }
 
-        // // PUT api/product/{id}
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> Update(int id, [FromBody] ProductUpdateRequest request)
-        // {
-        //     if (id != request.Id)
-        //         return BadRequest("ID in URL and payload do not match.");
+        // PUT api/product/{id}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] ProductUpdateRequest request)
+        {
+            if (id != request.Id)
+                return BadRequest("ID in URL and payload do not match.");
 
-        //     var updated = await _updateHandler.HandleAsync(request);
-        //     if (!updated)
-        //         return NotFound();
+            var updated = await _updateHandler.HandleAsync(request);
+            if (!updated)
+                return NotFound();
 
-        //     return NoContent();
-        // }
+            return NoContent();
+        }
 
         // // DELETE api/product/{id}
         // [HttpDelete("{id}")]

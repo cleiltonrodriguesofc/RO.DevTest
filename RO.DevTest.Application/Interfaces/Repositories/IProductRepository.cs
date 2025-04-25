@@ -7,8 +7,8 @@ namespace RO.DevTest.Application.Interfaces.Repositories;
 // repository interface for product
 public interface IProductRepository
 {
-    // // get product by id
-    // Task<Product?> GetByIdAsync(int id);
+    // get product by id
+    Task<Product?> GetByIdAsync(int id);
 
     // // get product by code
     Task<Product?> GetByCodeAsync(string code);
@@ -19,8 +19,8 @@ public interface IProductRepository
     // add a new product
     Task AddAsync(Product product);
 
-    // // update an existing product
-    // Task UpdateAsync(Product product);
+    // update an existing product
+    Task UpdateAsync(Product product);
 
     // // delete a product
     // Task DeleteAsync(Product product);
