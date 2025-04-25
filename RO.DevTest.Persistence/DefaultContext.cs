@@ -14,6 +14,9 @@ public class DefaultContext : IdentityDbContext<User> {
     public DbSet<Customer> Customers { get; set; }
     public DbSet<User> User { get; set; }
 
+    // add products db set
+    public DbSet<Product> Products { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder) {
         builder.HasPostgresExtension("uuid-ossp");
         builder.ApplyConfigurationsFromAssembly(typeof(DefaultContext).Assembly);

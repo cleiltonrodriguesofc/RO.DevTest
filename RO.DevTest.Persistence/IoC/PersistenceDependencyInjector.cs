@@ -33,8 +33,11 @@ public static class PersistenceDependencyInjector {
         services.AddDbContext<DefaultContext>(options =>
             options.UseNpgsql(connectionString));
         
-        // register repository interface with its concrete implementation
+        // register repository interface with its concrete implementation for customer
         services.AddScoped<ICustomerRepository, CustomerRepository>();
+        // register repository interface with its concrete implementation for product
+        services.AddScoped<IProductRepository, ProductRepository>();
+        
 
         return services;
     }

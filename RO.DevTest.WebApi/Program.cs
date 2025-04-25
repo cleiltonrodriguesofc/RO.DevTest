@@ -21,13 +21,12 @@ public class Program {
         builder.Services.InjectPersistenceDependencies(builder.Configuration)
             .InjectInfrastructureDependencies();
 
-        
-        // register customer use case handler
+        // register customer use case handlers
         // create
         builder.Services.AddScoped<
             RO.DevTest.Application.Interfaces.UseCases.Customer.ICreateCustomerHandler,
             RO.DevTest.Application.UseCases.Customer.Create.CreateCustomerHandler>();
-        
+
         // update
         builder.Services.AddScoped<
             RO.DevTest.Application.Interfaces.UseCases.Customer.IUpdateCustomerHandler,
@@ -37,6 +36,32 @@ public class Program {
         builder.Services.AddScoped<
             RO.DevTest.Application.Interfaces.UseCases.Customer.IDeleteCustomerHandler,
             RO.DevTest.Application.UseCases.Customer.Delete.DeleteCustomerHandler>();
+
+        // register product use case handlers
+        // create
+        builder.Services.AddScoped<
+            RO.DevTest.Application.Interfaces.UseCases.Product.ICreateProductHandler,
+            RO.DevTest.Application.UseCases.Product.Create.CreateProductHandler>();
+
+        // // update by code
+        // builder.Services.AddScoped<
+        //     RO.DevTest.Application.Interfaces.UseCases.Product.IUpdateProductByCodeHandler,
+        //     RO.DevTest.Application.UseCases.Product.Update.UpdateProductByCodeHandler>();
+
+        // // delete by code
+        // builder.Services.AddScoped<
+        //     RO.DevTest.Application.Interfaces.UseCases.Product.IDeleteProductByCodeHandler,
+        //     RO.DevTest.Application.UseCases.Product.Delete.DeleteProductByCodeHandler>();
+
+        // // get by id
+        // builder.Services.AddScoped<
+        //     RO.DevTest.Application.Interfaces.UseCases.Product.IGetProductByIdHandler,
+        //     RO.DevTest.Application.UseCases.Product.Get.GetProductByIdHandler>();
+
+        // // get by code
+        // builder.Services.AddScoped<
+        //     RO.DevTest.Application.Interfaces.UseCases.Product.IGetProductByCodeHandler,
+        //     RO.DevTest.Application.UseCases.Product.Get.GetProductByCodeHandler>();
 
         // Add Mediatr to program
         builder.Services.AddMediatR(cfg =>
@@ -49,7 +74,7 @@ public class Program {
 
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
+        // configure the http request pipeline
         if(app.Environment.IsDevelopment()) {
             app.UseSwagger();
             app.UseSwaggerUI();
