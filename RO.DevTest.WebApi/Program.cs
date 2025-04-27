@@ -14,7 +14,12 @@ public class Program {
         builder.Services.AddDbContext<DefaultContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+            });
+
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
@@ -62,6 +67,12 @@ public class Program {
         // builder.Services.AddScoped<
         //     RO.DevTest.Application.Interfaces.UseCases.Product.IGetProductByCodeHandler,
         //     RO.DevTest.Application.UseCases.Product.Get.GetProductByCodeHandler>();
+
+        // register sale
+        builder.Services.AddScoped<
+            RO.DevTest.Application.Interfaces.UseCases.Sale.ICreateSaleHandler,
+            RO.DevTest.Application.UseCases.Sale.Create.CreateSaleHandler>();
+
 
         // Add Mediatr to program
         builder.Services.AddMediatR(cfg =>

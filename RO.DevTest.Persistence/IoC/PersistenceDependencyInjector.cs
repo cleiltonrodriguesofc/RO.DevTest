@@ -38,6 +38,8 @@ public static class PersistenceDependencyInjector {
         // register repository interface with its concrete implementation for product
         services.AddScoped<IProductRepository, ProductRepository>();
         
+        // register repository interface with its concrete implementation for sale
+        services.AddScoped<ISaleRepository, SaleRepository>();
 
         return services;
     }
