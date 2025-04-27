@@ -78,6 +78,11 @@ public class Program {
             RO.DevTest.Application.Interfaces.UseCases.Sale.IUpdateSaleHandler,
             RO.DevTest.Application.UseCases.Sale.Update.UpdateSaleHandler>();
 
+        // delete sale
+        builder.Services.AddScoped<
+            RO.DevTest.Application.Interfaces.UseCases.Sale.IDeleteSaleHandler,
+            RO.DevTest.Application.UseCases.Sale.Delete.DeleteSaleHandler>();
+
 
         // Add Mediatr to program
         builder.Services.AddMediatR(cfg =>

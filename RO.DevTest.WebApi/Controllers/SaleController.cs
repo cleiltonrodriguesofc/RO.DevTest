@@ -10,16 +10,19 @@ namespace RO.DevTest.WebApi.Controllers
     public class SaleController : ControllerBase
     {
         private readonly ICreateSaleHandler _createHandler;
-        private readonly IUpdateSaleHandler _updateHandler; 
+        private readonly IUpdateSaleHandler _updateHandler;
+        private readonly IDeleteSaleHandler _deleteHandler;  
         private readonly ISaleRepository _repository;
 
         public SaleController(
-            ICreateSaleHandler createHandler, 
-            IUpdateSaleHandler updateHandler, 
+            ICreateSaleHandler createHandler,
+            IUpdateSaleHandler updateHandler,
+            IDeleteSaleHandler deleteHandler,  // inject delete handler
             ISaleRepository repository)
         {
             _createHandler = createHandler;
-            _updateHandler = updateHandler; 
+            _updateHandler = updateHandler;
+            _deleteHandler = deleteHandler;
             _repository = repository;
         }
 
@@ -48,8 +51,8 @@ namespace RO.DevTest.WebApi.Controllers
                 {
                     productCode = i.Product.Code,   // include product code
                     productName = i.Product.Name,   // include product name
-                    price = i.Price,                  // include sale price
-                    quantity = i.Quantity
+                    price = i.Price,                // include sale price
+                    quantity = i.Quantity           // include quantity
                 })
             };
 
@@ -83,15 +86,24 @@ namespace RO.DevTest.WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] SaleUpdateRequest request)
         {
-            // check if sale exists
             var existingSale = await _repository.GetByIdAsync(id);
             if (existingSale == null)
                 return NotFound();  // return 404 if sale not found
 
-            // update sale using the handler
             await _updateHandler.ExecuteAsync(request);
 
-            return NoContent();  // return no content (204) on successful update
+            return NoContent();  // return 204 on successful update
+        }
+
+        // DELETE api/sale/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var deleted = await _deleteHandler.HandleAsync(id);
+            if (!deleted)
+                return NotFound();  // return 404 if sale not found or already deleted
+
+            return NoContent();  // return 204 on successful deletion
         }
     }
 }
