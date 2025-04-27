@@ -86,7 +86,7 @@ namespace RO.DevTest.Tests.Unit.Application.UseCases.Sale.Create
 
             // setup product repository to simulate product not found
             productRepo.Setup(p => p.GetByIdAsync(It.IsAny<int>()))
-                .ReturnsAsync((ProductEntity)null);
+                .ReturnsAsync((ProductEntity?)null);
 
             var handler = new CreateSaleHandler(saleRepo.Object, productRepo.Object);
 

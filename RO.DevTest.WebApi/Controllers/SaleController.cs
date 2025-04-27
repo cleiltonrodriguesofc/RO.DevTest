@@ -10,11 +10,16 @@ namespace RO.DevTest.WebApi.Controllers
     public class SaleController : ControllerBase
     {
         private readonly ICreateSaleHandler _createHandler;
+        private readonly IUpdateSaleHandler _updateHandler; 
         private readonly ISaleRepository _repository;
 
-        public SaleController(ICreateSaleHandler createHandler, ISaleRepository repository)
+        public SaleController(
+            ICreateSaleHandler createHandler, 
+            IUpdateSaleHandler updateHandler, 
+            ISaleRepository repository)
         {
             _createHandler = createHandler;
+            _updateHandler = updateHandler; 
             _repository = repository;
         }
 
@@ -32,9 +37,23 @@ namespace RO.DevTest.WebApi.Controllers
         {
             var sale = await _repository.GetByIdAsync(id);
             if (sale == null)
-                return NotFound();
+                return NotFound();  // return 404 if sale not found
 
-            return Ok(sale);
+            // project only necessary fields
+            var result = new
+            {
+                saleId = sale.Id,
+                customerName = sale.Customer.Name,  // include customer name
+                items = sale.Items.Select(i => new
+                {
+                    productCode = i.Product.Code,   // include product code
+                    productName = i.Product.Name,   // include product name
+                    price = i.Price,                  // include sale price
+                    quantity = i.Quantity
+                })
+            };
+
+            return Ok(result);
         }
 
         // GET api/sale
@@ -42,7 +61,37 @@ namespace RO.DevTest.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var sales = await _repository.GetAllAsync();
-            return Ok(sales);
+
+            // project only necessary fields for each sale
+            var result = sales.Select(s => new
+            {
+                saleId = s.Id,
+                customerName = s.Customer.Name,
+                items = s.Items.Select(i => new
+                {
+                    productCode = i.Product.Code,
+                    productName = i.Product.Name,
+                    price = i.Price,
+                    quantity = i.Quantity
+                })
+            });
+
+            return Ok(result);
+        }
+
+        // PUT api/sale/{id}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] SaleUpdateRequest request)
+        {
+            // check if sale exists
+            var existingSale = await _repository.GetByIdAsync(id);
+            if (existingSale == null)
+                return NotFound();  // return 404 if sale not found
+
+            // update sale using the handler
+            await _updateHandler.ExecuteAsync(request);
+
+            return NoContent();  // return no content (204) on successful update
         }
     }
 }

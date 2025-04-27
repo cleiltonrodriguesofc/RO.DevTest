@@ -16,4 +16,7 @@ public interface ISaleRepository
 
     // delete a sale by id
     Task<bool> DeleteAsync(int id);
+
+    // update a sale
+    Task UpdateAsync(Sale sale);
 }

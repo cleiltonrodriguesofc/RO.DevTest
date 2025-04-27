@@ -14,19 +14,23 @@ public class SaleRepository : ISaleRepository
         _context = context;
     }
 
-    // get a sale by id
+    // get a sale by id, including customer and product details
     public async Task<Sale?> GetByIdAsync(int id)
     {
         return await _context.Sales
-            .Include(s => s.Items) // include sale items
+            .Include(s => s.Customer)                    // include customer
+            .Include(s => s.Items)                       // include sale items
+                .ThenInclude(i => i.Product)             // include product on each item
             .FirstOrDefaultAsync(s => s.Id == id);
     }
 
-    // get all sales
+    // get all sales, including customer and product details
     public async Task<IEnumerable<Sale>> GetAllAsync()
     {
         return await _context.Sales
-            .Include(s => s.Items) // include sale items
+            .Include(s => s.Customer)                    // include customer
+            .Include(s => s.Items)                       // include sale items
+                .ThenInclude(i => i.Product)             // include product on each item
             .ToListAsync();
     }
 
@@ -50,5 +54,12 @@ public class SaleRepository : ISaleRepository
         await _context.SaveChangesAsync();
 
         return true;
+    }
+
+    // update a sale
+    public async Task UpdateAsync(Sale sale)
+    {
+        _context.Sales.Update(sale);
+        await _context.SaveChangesAsync();
     }
 }
