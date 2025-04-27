@@ -1,4 +1,4 @@
-# Rota das Oficinas Technical Test - Project Documentation
+# Rota das Oficinas Technical Test (RO.DevTest) - Project Documentation
 
 ## Introduction
 This repository is a .NET 8.0 Web API implementing a basic e-commerce system for managing **Customers**, **Products**, and **Sales**. It builds upon the provided template, preserving the original architecture (CQRS, Repository Pattern) and integrating with PostgreSQL via Entity Framework Core.
